@@ -6,6 +6,8 @@ const App = () => {
 
 
   const [ricks, setRicks] = useState([]);
+  const [search, setSearch] = useState('');
+
 
 
   useEffect(() => {
@@ -19,15 +21,30 @@ const App = () => {
     console.log(data.results);
   };
 
+  const updateSearch = e => {
+    setSearch(e.target.value);
+    console.log(search);
+  }
+
 
   return (
     <div className="App">
       <form className="search-form">
-        <input className="search-bar" type="text" />
+        <input className="search-bar" type="text"
+          value={search}
+        />
         <button className="search-button" type="submit">Search</button>
       </form>
       {ricks.map(rick => (
-        <Rick name={rick.name} status={rick.status} species={rick.species} gender={rick.gender} location={rick.location.name} image={rick.image} />
+        <Rick
+          key={rick.name}
+          name={rick.name}
+          status={rick.status}
+          species={rick.species}
+          gender={rick.gender}
+          location={rick.location.name}
+          image={rick.image}
+        />
       ))}
     </div>
   );
