@@ -1,24 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
+import Rick from './rick';
 import './App.css';
 
-function App() {
+const App = () => {
+
+
+  const [ricks, setRicks] = useState([]);
+
+
+  useEffect(() => {
+    getRick()
+  }, []);
+
+  const getRick = async () => {
+    const response = await fetch("https://rickandmortyapi.com/api/character/?page=19");
+    const data = await response.json();
+    setRicks(data.results);
+    console.log(data.results);
+  };
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <form className="search-form">
+        <input className="search-bar" type="text" />
+        <button className="search-button" type="submit">Search</button>
+      </form>
+      {ricks.map(rick => (
+        <Rick name={rick.name} status={rick.status} species={rick.species} gender={rick.gender} location={rick.location.name} image={rick.image} />
+      ))}
     </div>
   );
 }
